@@ -1,4 +1,5 @@
 import {Box, Button, Text} from "@chakra-ui/react";
+import {compileCode} from "../utils/request";
 
 const CodeOutput = ({editorRef,language}) => {
     
@@ -7,7 +8,9 @@ const CodeOutput = ({editorRef,language}) => {
         const sourceCode = editorRef.current.getValue();
         if(!sourceCode) return;
         //make Api Call
-        try{}catch (e) {
+        try{
+          const {} =  await compileCode(language,sourceCode)
+        }catch (e) {
             
         }
         
@@ -15,7 +18,7 @@ const CodeOutput = ({editorRef,language}) => {
     return(
         <>
             <Text mb={2} fontSize={'lg'}>OutPut</Text>
-            <Button variant={'outline'} colorScheme={'green'} mb={4}> Run Code</Button>
+            <Button variant={'outline'} colorScheme={'green'} mb={4} onClick={handleRunCode}> Run Code</Button>
 
             <Box
                 height={'75vh'}

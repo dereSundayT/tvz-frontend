@@ -2,15 +2,16 @@ import {Box, HStack} from "@chakra-ui/react";
 import {Editor} from "@monaco-editor/react";
 import {useRef, useState} from "react";
 import LanguageSelector from "./LanguageSelector";
-import {CODE_SNIPPETS} from "./constant";
 import CodeOutput from "./CodeOutput";
+import {LANGUAGE_OPTIONS} from "./constant";
 
 export const CodeEditor = () => {
     //focus on the editor it mounts
     const editorRef = useRef();
     //store the state of code written
-    const [value,setValue] = useState('');
-    const [language , setLanguage] = useState('javascript');
+    const [value,setValue] = useState('');  //empty state
+    const [language , setLanguage] = useState(LANGUAGE_OPTIONS[0]);
+
 
 
     //when the component mounts
@@ -20,7 +21,7 @@ export const CodeEditor = () => {
     }
     const handleLanguageChange = (language)=>{
         setLanguage(language)
-        setValue(CODE_SNIPPETS[language])
+        setValue(language.snippet)
     }
 
 
@@ -30,13 +31,13 @@ export const CodeEditor = () => {
         <Box>
             <HStack spacing={4}>
                 <Box w={'50%'}>
-                    <LanguageSelector language={language} onSelect={handleLanguageChange}/>
+                    <LanguageSelector language={language.value} onSelect={handleLanguageChange}/>
                     <Editor
                         height="75vh"
                         theme={'vs-dark'}
-                        language={language}
-                        defaultValue={CODE_SNIPPETS[language]}
-                        value={value}
+                        language={language.value??''} //string
+                        defaultValue={''}
+                        value={language.snippet}
                         onMount={onMount}
                         //get the value from the editor and update our state
                         onChange={(value,event) => {
