@@ -10,7 +10,8 @@ export const CodeEditor = () => {
     const editorRef = useRef();
     //store the state of code written
     const [value,setValue] = useState('');  //empty state
-    const [language , setLanguage] = useState(LANGUAGE_OPTIONS[0]);
+    const [language , setLanguage] = useState(LANGUAGE_OPTIONS[5]);
+    const [isLoading,setIsLoading] = useState(false)
 
 
 
@@ -22,6 +23,9 @@ export const CodeEditor = () => {
     const handleLanguageChange = (language)=>{
         setLanguage(language)
         setValue(language.snippet)
+    }
+    const handleLoading = (loading) => {
+        setIsLoading(loading)
     }
 
 
@@ -46,7 +50,7 @@ export const CodeEditor = () => {
                     />;
                 </Box>
                 <Box w={'50%'}>
-                    <CodeOutput editorRef={editorRef} language={language}/>
+                    <CodeOutput editorRef={editorRef} language={language} handleLoading={handleLoading} isLoading={isLoading}/>
                 </Box>
             </HStack>
 

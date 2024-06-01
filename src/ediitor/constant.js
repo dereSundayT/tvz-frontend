@@ -40,7 +40,7 @@ export const LANGUAGE_OPTIONS = [
         name: "SQL (SQLite 3.27.2)",
         label: "SQL (SQLite 3.27.2)",
         value: "sql",
-        snippet : `//sql  snippet`
+        snippet : `--sql snippet`
     },
     {
         id: 74,
