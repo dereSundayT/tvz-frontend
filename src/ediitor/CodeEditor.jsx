@@ -5,7 +5,7 @@ import LanguageSelector from "./LanguageSelector";
 import CodeOutput from "./CodeOutput";
 import {LANGUAGE_OPTIONS} from "./constant";
 
-export const CodeEditor = () => {
+export const CodeEditor = ({test_id}) => {
     //focus on the editor it mounts
     const editorRef = useRef();
     //store the state of code written
@@ -50,7 +50,7 @@ export const CodeEditor = () => {
                     />;
                 </Box>
                 <Box w={'50%'}>
-                    <CodeOutput editorRef={editorRef} language={language} handleLoading={handleLoading} isLoading={isLoading}/>
+                    <CodeOutput editorRef={editorRef} language={language} handleLoading={handleLoading} isLoading={isLoading} test_id={test_id}/>
                 </Box>
             </HStack>
 

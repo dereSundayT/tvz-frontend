@@ -2,7 +2,7 @@ const AuthWrapper = ({children}) => {
 
     return(
         <>
-            <div className="app-content content ">
+            <div className="app-content content">
                 <div className="content-overlay"></div>
                 <div className="header-navbar-shadow"></div>
                 <div className="content-wrapper">

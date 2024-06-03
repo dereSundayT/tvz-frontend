@@ -3,9 +3,9 @@ import {Box, Skeleton, SkeletonCircle, SkeletonText, Stack} from "@chakra-ui/rea
 const SkeletonLoader = () => {
     return(
         <>
-            <Box padding='6' boxShadow='lg' bg='white'>
+            <Box padding='6' mb={1} boxShadow='lg' bg='#283046'>
                 <SkeletonCircle size='10' />
-                <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+                <SkeletonText mt='4'  noOfLines={4} spacing='4' skeletonHeight='2' />
             </Box>
 
         </>

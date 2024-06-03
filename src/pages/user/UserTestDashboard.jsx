@@ -5,6 +5,8 @@ import {Link, useParams} from "react-router-dom";
 import {CodeEditor} from "../../ediitor/CodeEditor";
 import SkeletonLoader from "../../components/SkeletonLoader";
 import {inAppUrls} from "../../utils/routes/routes";
+import {getDataFromLocalStorage} from "../../utils/routes/utills";
+import DashboardWrapper from "../DashboardWrapper";
 
 const UserTestDashboard = () => {
     const {id} = useParams();
@@ -12,8 +14,9 @@ const UserTestDashboard = () => {
     const [isTestLoading, setIsTestLoading] = useState(false)
 
     const getTestDetails = async () => {
+        const token = await getDataFromLocalStorage('token')
         setIsTestLoading(true)
-        const resp = await getRequest(`user/test/${id}`, '')
+        const resp = await getRequest(`user/test/${id}`, token)
         setIsTestLoading(false)
         if (resp.status) {
             setTest(resp.data)
@@ -24,7 +27,7 @@ const UserTestDashboard = () => {
         getTestDetails().then(r => console.log(r))
     }, []);
     return (
-        <Box>
+        <DashboardWrapper>
             <HStack spacing={4}>
                 <Box width={'30%'}>
                     <Box mb={4}>
@@ -37,25 +40,25 @@ const UserTestDashboard = () => {
                             ?
                             <SkeletonLoader/>
                             :
-                            <Card height={"75vh"}>
+                            <div >
 
-                                <CardHeader>
+                                <div>
                                     <Heading size='md'>{test?.description}</Heading>
-                                </CardHeader>
+                                </div>
 
-                                <CardBody>
+                                <div>
                                     <Text fontSize='sm'>{test.test_category}</Text>
                                     <Text fontSize='sm'>{test.question}</Text>
-                                </CardBody>
-                            </Card>
+                                </div>
+                            </div>
                     }
                 </Box>
 
                 <Box width={'70%'}>
-                    <CodeEditor/>
+                    <CodeEditor test_id={id}/>
                 </Box>
             </HStack>
-        </Box>
+        </DashboardWrapper>
     )
 }
 

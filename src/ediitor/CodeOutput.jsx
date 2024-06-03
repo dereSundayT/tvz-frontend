@@ -1,18 +1,20 @@
 import {
     Box,
     Button,
-    CircularProgress,
     Spinner, Table,
-    TableCaption,
     TableContainer, Tbody, Td,
     Text, Th,
     Thead, Tr,
     useToast
 } from "@chakra-ui/react";
-import {compileCode} from "../utils/request";
+import {compileCode, postRequest} from "../utils/request";
+import {getDataFromLocalStorage} from "../utils/routes/utills";
+import {useState} from "react";
 
-const CodeOutput = ({editorRef, language, handleLoading, isLoading}) => {
+const CodeOutput = ({editorRef, language, handleLoading, isLoading,test_id}) => {
     const toast = useToast()
+    const [testToken, setTestToken] = useState('')
+    const [sourceCode, setSourceCode] = useState('')
 
 
     /**
@@ -29,7 +31,8 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading}) => {
             const resp = await compileCode(language, sourceCode)
             handleLoading(false)
             if (resp.status) {
-                console.log(resp.data.status.id===3)
+                setTestToken(resp.data.token)
+                setSourceCode(sourceCode)
                 toast({
                     title: 'Code compiled successfully.',
                     description: `you can see the output in the output tab.`,
@@ -38,9 +41,34 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading}) => {
                     isClosable: true,
                 })
             }
-
         } catch (e) {
             console.log(e)
+            handleLoading(false)
+        }
+
+    }
+
+
+    const handleSubmit = async () => {
+        const token = await getDataFromLocalStorage('token')
+        try{
+            handleLoading(true)
+            const resp = await postRequest(
+                `user/test/${test_id}`,
+                {user_submission:sourceCode,token:testToken},
+                token
+            )
+            handleLoading(false)
+            if (resp.status) {
+                toast({
+                    title: 'Successfully submitted.',
+                    description: `you test was successfully submitted.`,
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }
+        }catch (e) {
             handleLoading(false)
         }
 
@@ -55,7 +83,14 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading}) => {
                 :
                 <Button variant={'outline'} colorScheme={'green'} mb={4} onClick={handleRunCode}> Run Code</Button>
             }
-            <Button variant={'outline'} colorScheme={'primary'} float={'right'} mb={4} onClick={handleRunCode}> Submit Code </Button>
+
+            {isLoading
+                ?
+                <Spinner color='red.500'/>
+                :
+                <Button variant={'outline'} colorScheme={'primary'} float={'right'} mb={4} onClick={handleSubmit}> Submit Code </Button>
+            }
+
 
 
             <Box

@@ -3,6 +3,7 @@ import {TestListingComponent} from "../../components/test";
 import {getRequest} from "../../utils/request";
 import {useEffect, useState} from "react";
 import {getDataFromLocalStorage} from "../../utils/routes/utills";
+import DashboardWrapper from "../DashboardWrapper";
 
 const UserDashboard = () => {
     const [tests, setTest]  = useState([])
@@ -22,11 +23,16 @@ const UserDashboard = () => {
         getTestForUser().then(r => console.log(r))
     }, []);
     return (
-        <div className={'p-4'}>
-            <div>
-                <TestListingComponent data={tests}/>
+        <DashboardWrapper>
+            <div className={'row'}>
+                <div className={'col-6'}>
+                    <TestListingComponent data={tests}/>
+                </div>
+                <div className={'col-6'}>
+                 <h1>Attempted Tests</h1>
+                </div>
             </div>
-        </div>
+        </DashboardWrapper>
     )
 }
 
