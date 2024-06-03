@@ -3,10 +3,12 @@ import React from "react";
 import {UserDashboard, UserProfile} from "../../pages/user";
 import UserTestDashboard from "../../pages/user/UserTestDashboard";
 import {Login, Register} from "../../pages/auth";
+import PageNotFound from "../../pages/PageNotFound";
 
 
 export const inAppUrls ={
     home :'/',
+    notfound: '*',
     register :'/sign-up',
     userDashboard : '/user/dashboard',
     userTestDashboard_ : '/user/test',
@@ -34,5 +36,9 @@ export const routes = [
     {
         path: inAppUrls.userProfile,
         element: <UserProfile/>,
+    },
+    {
+        path: inAppUrls.notfound,
+        element: <PageNotFound/>,
     },
 ]
