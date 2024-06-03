@@ -8,12 +8,12 @@ const CompletedTestComponent = ({data}) =>{
         {data.map((test,key=0)=> (
             <div key={key} class="card mb-4">
                 <div className="card-body">
-                    <h4 className="card-title">Card title</h4>
-                    <div className="card-subtitle text-muted mb-1">Card subtitle</div>
+                    <h4 className="card-title"> {test.test.description}</h4>
+                    <div className="card-subtitle text-muted mb-1">{test.test.test_category}</div>
                     <p className="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        {test.test.question}
                     </p>
-                    <a href="#" className="card-link">Card link</a>
+                    <span className=" btn btn-outline-primary">No of Attempts :  {test.user_test_details.length}</span>
                     <a href="#" className="card-link">Another link</a>
                 </div>
             </div>
