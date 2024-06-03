@@ -2,6 +2,7 @@
 import React from "react";
 import {UserDashboard} from "../../pages/user";
 import UserTestDashboard from "../../pages/user/UserTestDashboard";
+import Login from "../../auth/Login";
 export const inAppUrls ={
     home :'/',
     userDashboard : '/user/dashboard',
@@ -10,10 +11,10 @@ export const inAppUrls ={
 }
 
 export const routes = [
-    // {
-    //     path:inAppUrls.home,
-    //     element:<App/>,
-    // },
+    {
+        path:inAppUrls.home,
+        element:<Login/>,
+    },
     {
         path: inAppUrls.userDashboard,
         element: <UserDashboard/>,

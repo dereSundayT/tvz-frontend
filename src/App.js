@@ -7,9 +7,14 @@ import {Outlet} from "react-router-dom";
 
 function App() {
   return (
-  <Box minH={"100vh"} bg={"#0f0a19"} color={"gray.500"} px={6} py={8}>
-    <Outlet/>
-  </Box>
+      //px={6} py={8}
+      //bg={"#0f0a19"} color={"gray.500"}
+  // <Box minH={"100vh"} >
+      <div>
+        <Outlet/>
+      </div>
+
+  // </Box>
   );
 }
 

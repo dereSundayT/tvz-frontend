@@ -100,3 +100,22 @@ export const getRequest = async (url, token) => {
   }
     return  {status:false,data:null}
 }
+
+export const postRequest = async (url,postData, token) => {
+    try{
+        const options = {
+            headers:{
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        const respData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/${url}`,postData,options)
+        if(respData.status===200){
+            return respData.data
+        }
+    }catch (e){
+        // console.log(e.response.data.message)
+        return  {status:false,data:null,message:e.response.data.message}
+    }
+
+}
