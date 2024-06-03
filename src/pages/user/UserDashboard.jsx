@@ -2,15 +2,19 @@ import {HStack} from "@chakra-ui/react";
 import {TestListingComponent} from "../../components/test";
 import {getRequest} from "../../utils/request";
 import {useEffect, useState} from "react";
+import {getDataFromLocalStorage} from "../../utils/routes/utills";
 
 const UserDashboard = () => {
     const [tests, setTest]  = useState([])
+    const [attempted_tests, setAttemptedTests]  = useState([])
 
     const getTestForUser = async () => {
-        const resp =  await getRequest('user/tests',
-            '')
+        const token = getDataFromLocalStorage('token')
+        const resp =  await getRequest('user/tests', token)
+
         if(resp.status){
-            setTest(resp.data)
+            setTest(resp.data.tests)
+            setAttemptedTests(resp.data?.attempted_tests??[])
         }
     }
 

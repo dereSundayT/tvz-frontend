@@ -83,22 +83,18 @@ export const getRequest = async (url, token) => {
   try{
       const options = {
           headers:{
-              "content-type": "application/json",
               "Content-Type": "application/json",
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImZpcnN0X25hbWUiOiJKb2huIiwibGFzdF9uYW1lIjoiRG9lIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTcyNzcwNTgsImV4cCI6MTcxNzM2MzQ1OH0.aH6rDqvxa977DcD-eROg55qsGMj-cvqeLgxj7rOPGjQ`
+              Authorization: `Bearer ${token}`
           }
       }
       const respData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${url}`,options)
       if(respData.status===200){
-
-          return {status:true,data:respData.data.data}
+          return respData.data
       }
-      return  {status:false,data:null}
-
   }catch (e){
-
+      return  {status:false,data:null,message:e.response.data.message}
   }
-    return  {status:false,data:null}
+
 }
 
 export const postRequest = async (url,postData, token) => {

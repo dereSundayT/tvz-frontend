@@ -1,36 +1,20 @@
-import {
-    Box,
-    Button,
-    Flex,
-    FormControl,
-    FormErrorMessage,
-    FormHelperText,
-    FormLabel,
-    HStack,
-    Input, VStack,
-    InputGroup,
-    InputRightElement,
-    Icon, Heading, useToast
-} from "@chakra-ui/react";
-
-import {Center, Square, Circle} from '@chakra-ui/react'
+import {Link, useNavigate} from "react-router-dom";
+import {useToast} from "@chakra-ui/react";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {postRequest} from "../utils/request";
 import {storeDataInLocalStorage} from "../utils/routes/utills";
-import {Link, Navigate, useNavigate} from "react-router-dom";
 import {inAppUrls} from "../utils/routes/routes";
 import AuthWrapper from "./AuthWrapper";
 
-
-const Login = () => {
+const Register = () => {
     const navigate = useNavigate();
     const toast = useToast()
     const [isLoading, setIsLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const {register,reset,
         handleSubmit, formState: {errors}, clearForm} = useForm({
-        defaultValues: {email: '', password: '',},
+        defaultValues: {email: '', password: '',first_name:'',last_name:''},
     });
 
     /**
@@ -41,7 +25,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             setIsLoading(true)
-            const respData = await postRequest('auth/login', data)
+            const respData = await postRequest('auth/register', data)
             setIsLoading(false)
             const message = respData.message
             if(respData.status){
@@ -55,10 +39,7 @@ const Login = () => {
                     duration: 4000,
                     isClosable: true,
                 })
-                //Store token in local
-                storeDataInLocalStorage('token', respData.data.access_token)
-                //redirect to user or admin dashboard
-                navigate(inAppUrls.userDashboard)
+                navigate(inAppUrls.home)
             }else{
                 toast({
                     title: 'Error!',
@@ -68,8 +49,6 @@ const Login = () => {
                     isClosable: true,
                 })
             }
-
-            // console.log(respData)
         }
         catch (e) {
             setIsLoading(false)
@@ -79,6 +58,30 @@ const Login = () => {
     return (
         <AuthWrapper>
             <form onSubmit={handleSubmit(onSubmit)} className="auth-login-form mt-2">
+                {/**/}
+                <div className="mb-1">
+                    <label htmlFor="login-email" className="form-label">First Name</label>
+                    <input
+                        type="text"
+                        className={`form-control ${errors.first_name && 'is-invalid'} `}
+                        tabIndex={1}
+                        {...register('first_name', {required: {value: true, message: 'first name is required'},})}
+                    />
+                    {errors.first_name && <div className="invalid-feedback">{errors.first_name.message}</div>}
+                </div>
+
+                {/**/}
+                <div className="mb-1">
+                    <label htmlFor="last-name-email" className="form-label">Last Name</label>
+                    <input
+                        type="text"
+                        className={`form-control ${errors.last_name && 'is-invalid'} `}
+                        tabIndex={1}
+                        {...register('last_name', {required: {value: true, message: 'last name is required'},})}
+                    />
+                    {errors.last_name && <div className="invalid-feedback">{errors.last_name.message}</div>}
+                </div>
+
                 <div className="mb-1">
                     <label htmlFor="login-email" className="form-label">Email</label>
                     <input
@@ -86,16 +89,16 @@ const Login = () => {
                         className={`form-control ${errors.email && 'is-invalid'} `}
                         tabIndex={1}
                         {
-                        ...register('email', {
-                            required: {
-                                value: true,
-                                message: 'email is required'
-                            },
-                            pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                message: 'Invalid email address'
-                            }
-                        })}
+                            ...register('email', {
+                                required: {
+                                    value: true,
+                                    message: 'email is required'
+                                },
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                    message: 'Invalid email address'
+                                }
+                            })}
                     />
                     {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
                 </div>
@@ -147,15 +150,15 @@ const Login = () => {
                 </div>
                 {
                     isLoading
-                    ?
-                    <button className="btn btn-outline-primary waves-effect w-100" type="button" disabled="">
-                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span className="visually-hidden">Loading...</span>
-                    </button>
-                    :
-                    <button className="btn btn-primary w-100" tabIndex={4}>
-                        Sign in
-                    </button>
+                        ?
+                        <button className="btn btn-outline-primary waves-effect w-100" type="button" disabled="">
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span className="visually-hidden">Loading...</span>
+                        </button>
+                        :
+                        <button className="btn btn-primary w-100" tabIndex={4}>
+                            Sign in
+                        </button>
                 }
 
 
@@ -170,5 +173,4 @@ const Login = () => {
         </AuthWrapper>
     )
 }
-
-export default Login
+export default Register
