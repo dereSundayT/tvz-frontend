@@ -28,36 +28,37 @@ const UserTestDashboard = () => {
     }, []);
     return (
         <DashboardWrapper>
-            <HStack spacing={4}>
-                <Box width={'30%'}>
-                    <Box mb={4}>
-                        <Text mb={2} fontSize={'lg'} color={'#FFF'}>Test:</Text>
-                        <Link to={inAppUrls.userDashboard} mb={2} color={'#FFF'}>&nbsp; Go back</Link>
-                    </Box>
+            <div className={'row mt-5'}>
+                <div className={'col-4'}>
+                    <div className={''}>
+                        <div className={'mb-5'}>
+                            <h2>Test:</h2>
+                            <h6></h6>
+                        </div>
 
-                    {
-                        isTestLoading
-                            ?
-                            <SkeletonLoader/>
-                            :
-                            <div >
-
-                                <div>
-                                    <Heading size='md'>{test?.description}</Heading>
+                        {
+                            isTestLoading
+                                ?
+                                <SkeletonLoader/>
+                                :
+                                <div className={'card'}>
+                                    <div  className={''}>
+                                        <div className={'card-header'}>{test?.description}</div>
+                                        <div  className={'card-body'}>
+                                            <Text fontSize='sm'>{test.test_category}</Text>
+                                            <Text fontSize='sm'>{test.question}</Text>
+                                        </div>
+                                    </div>
                                 </div>
+                        }
+                    </div>
 
-                                <div>
-                                    <Text fontSize='sm'>{test.test_category}</Text>
-                                    <Text fontSize='sm'>{test.question}</Text>
-                                </div>
-                            </div>
-                    }
-                </Box>
+                </div>
 
-                <Box width={'70%'}>
+                <div className={'col-8'}>
                     <CodeEditor test_id={id}/>
-                </Box>
-            </HStack>
+                </div>
+            </div>
         </DashboardWrapper>
     )
 }

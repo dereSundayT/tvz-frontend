@@ -1,14 +1,16 @@
 
 import React from "react";
-import {UserDashboard} from "../../pages/user";
+import {UserDashboard, UserProfile} from "../../pages/user";
 import UserTestDashboard from "../../pages/user/UserTestDashboard";
-import {Login, Register} from "../../auth";
+import {Login, Register} from "../../pages/auth";
+
 
 export const inAppUrls ={
     home :'/',
     register :'/sign-up',
     userDashboard : '/user/dashboard',
     userTestDashboard_ : '/user/test',
+    userProfile : '/user/profile',
     userTestDashboard : '/user/test/:id',
 }
 
@@ -28,5 +30,9 @@ export const routes = [
     {
         path: inAppUrls.userTestDashboard,
         element: <UserTestDashboard/>,
+    },
+    {
+        path: inAppUrls.userProfile,
+        element: <UserProfile/>,
     },
 ]

@@ -16,11 +16,13 @@ import {
 import {Center, Square, Circle} from '@chakra-ui/react'
 import {useState} from "react";
 import {useForm} from "react-hook-form";
-import {postRequest} from "../utils/request";
-import {storeDataInLocalStorage} from "../utils/routes/utills";
+import {postRequest} from "../../utils/request";
+
 import {Link, Navigate, useNavigate} from "react-router-dom";
-import {inAppUrls} from "../utils/routes/routes";
+
 import AuthWrapper from "./AuthWrapper";
+import {storeDataInLocalStorage} from "../../utils/routes/utills";
+import {inAppUrls} from "../../utils/routes/routes";
 
 
 const Login = () => {

@@ -15,6 +15,7 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading,test_id}) => 
     const toast = useToast()
     const [testToken, setTestToken] = useState('')
     const [sourceCode, setSourceCode] = useState('')
+    const [output, setOutput] = useState({status:'',memory:'',time:''})
 
 
     /**
@@ -31,6 +32,10 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading,test_id}) => 
             const resp = await compileCode(language, sourceCode)
             handleLoading(false)
             if (resp.status) {
+                setOutput({
+                    time:resp.data.time,
+                    memory:resp.data.memory,
+                    status:resp.data.status.description})
                 setTestToken(resp.data.token)
                 setSourceCode(sourceCode)
                 toast({
@@ -60,6 +65,7 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading,test_id}) => 
             )
             handleLoading(false)
             if (resp.status) {
+
                 toast({
                     title: 'Successfully submitted.',
                     description: `you test was successfully submitted.`,
@@ -110,16 +116,15 @@ const CodeOutput = ({editorRef, language, handleLoading, isLoading,test_id}) => 
                         <Tbody>
                             <Tr>
                                 <Td>Status</Td>
-                                <Td>millimetres (mm)</Td>
-
+                                <Td>{output?.status}</Td>
                             </Tr>
                             <Tr>
-                                <Td>time</Td>
-                                <Td>centimetres (cm)</Td>
+                                <Td>Time</Td>
+                                <Td>{output?.time}</Td>
                             </Tr>
                             <Tr>
-                                <Td>memory</Td>
-                                <Td>metres (m)</Td>
+                                <Td>Memory Used</Td>
+                                <Td>{output?.memory}</Td>
                             </Tr>
                         </Tbody>
                     </Table>

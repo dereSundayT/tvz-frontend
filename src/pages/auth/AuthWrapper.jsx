@@ -1,4 +1,18 @@
+import {useEffect} from "react";
+import {getDataFromLocalStorage} from "../../utils/routes/utills";
+import {Navigate, useNavigate} from "react-router-dom";
+import {inAppUrls} from "../../utils/routes/routes";
+
 const AuthWrapper = ({children}) => {
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        const token = getDataFromLocalStorage('token')
+        if(token){
+            navigate(inAppUrls.userDashboard)
+        }
+    }, []);
 
     return(
         <>

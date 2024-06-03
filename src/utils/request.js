@@ -79,6 +79,13 @@ export const compileCode = async (language, sourceCode) => {
 }
 
 
+const handleRequestError = (e) => {
+    //code: 'ERR_NETWORK'
+    // console.log(e.response.data.message)
+    return  e.response ? e.response.data.message:e.message
+}
+
+
 export const getRequest = async (url, token) => {
   try{
       const options = {
@@ -92,7 +99,8 @@ export const getRequest = async (url, token) => {
           return respData.data
       }
   }catch (e){
-      return  {status:false,data:null,message:e.response.data.message}
+      const message = handleRequestError(e)
+      return  {status:false,data:null,message}
   }
 
 }
@@ -110,8 +118,28 @@ export const postRequest = async (url,postData, token) => {
             return respData.data
         }
     }catch (e){
-        // console.log(e.response.data.message)
-        return  {status:false,data:null,message:e.response.data.message}
+       const message = handleRequestError(e)
+        return  {status:false,data:null,message}
+    }
+
+}
+
+
+export const patchRequest = async (url,postData, token) => {
+    try{
+        const options = {
+            headers:{
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        const respData = await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/${url}`,postData,options)
+        if(respData.status===200){
+            return respData.data
+        }
+    }catch (e){
+        const message = handleRequestError(e)
+        return  {status:false,data:null,message}
     }
 
 }

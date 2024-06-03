@@ -33,8 +33,8 @@ export const CodeEditor = ({test_id}) => {
 
     return (
         <Box>
-            <HStack spacing={4}>
-                <Box w={'50%'}>
+            <div className={'row'} >
+                <div className={'col-6'}>
                     <LanguageSelector language={language.value} onSelect={handleLanguageChange}/>
                     <Editor
                         height="75vh"
@@ -48,11 +48,11 @@ export const CodeEditor = ({test_id}) => {
                             setValue(value);
                         }}
                     />;
-                </Box>
-                <Box w={'50%'}>
+                </div>
+                <div className={'col-6'}>
                     <CodeOutput editorRef={editorRef} language={language} handleLoading={handleLoading} isLoading={isLoading} test_id={test_id}/>
-                </Box>
-            </HStack>
+                </div>
+            </div>
 
         </Box>
     )

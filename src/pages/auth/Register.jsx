@@ -2,10 +2,9 @@ import {Link, useNavigate} from "react-router-dom";
 import {useToast} from "@chakra-ui/react";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
-import {postRequest} from "../utils/request";
-import {storeDataInLocalStorage} from "../utils/routes/utills";
-import {inAppUrls} from "../utils/routes/routes";
 import AuthWrapper from "./AuthWrapper";
+import {postRequest} from "../../utils/request";
+import {inAppUrls} from "../../utils/routes/routes";
 
 const Register = () => {
     const navigate = useNavigate();
