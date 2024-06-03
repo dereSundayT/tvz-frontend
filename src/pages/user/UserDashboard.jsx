@@ -1,5 +1,5 @@
 import {HStack} from "@chakra-ui/react";
-import {TestListingComponent} from "../../components/test";
+import {CompletedTestComponent, TestListingComponent} from "../../components/test";
 import {getRequest} from "../../utils/request";
 import {useEffect, useState} from "react";
 import {getDataFromLocalStorage} from "../../utils/routes/utills";
@@ -29,7 +29,7 @@ const UserDashboard = () => {
                     <TestListingComponent data={tests}/>
                 </div>
                 <div className={'col-6'}>
-                 <h1>Attempted Tests</h1>
+                    <CompletedTestComponent data={attempted_tests} />
                 </div>
             </div>
         </DashboardWrapper>
